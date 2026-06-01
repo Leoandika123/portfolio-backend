@@ -8,9 +8,11 @@ foreach (['/views', '/cache', '/sessions'] as $path) {
     }
 }
 
-// 2. Daftarkan path baru ke environment server sebelum Laravel di-load
-define('LARAVEL_START', microtime(true));
+// 2. Masukkan Environment Variables langsung lewat kode PHP
+$_ENV['APP_DEBUG'] = 'true';
+$_ENV['DB_CONNECTION'] = 'sqlite';
+$_ENV['DB_DATABASE'] = ':memory:';
 $_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
 
-// 3. Jalankan Laravel secara normal
+// 3. Jalankan Laravel secara normal (LARAVEL_START didefinisikan di dalam file ini)
 require __DIR__ . '/../public/index.php';
