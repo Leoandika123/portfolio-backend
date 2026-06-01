@@ -1,6 +1,11 @@
 <?php
 
-// 1. Paksa Laravel memakai folder /tmp bawaan Vercel untuk cache & views
+// 1. Cek apakah LARAVEL_START sudah ada, jika belum baru kita definisikan
+if (!defined('LARAVEL_START')) {
+    define('LARAVEL_START', microtime(true));
+}
+
+// 2. Paksa Laravel memakai folder /tmp bawaan Vercel untuk cache & views
 $storagePath = '/tmp/storage/framework';
 foreach (['/views', '/cache', '/sessions'] as $path) {
     if (!is_dir($storagePath . $path)) {
@@ -8,11 +13,11 @@ foreach (['/views', '/cache', '/sessions'] as $path) {
     }
 }
 
-// 2. Masukkan Environment Variables langsung lewat kode PHP
+// 3. Masukkan Environment Variables langsung lewat kode PHP
 $_ENV['APP_DEBUG'] = 'true';
 $_ENV['DB_CONNECTION'] = 'sqlite';
 $_ENV['DB_DATABASE'] = ':memory:';
 $_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
 
-// 3. Jalankan Laravel secara normal (LARAVEL_START didefinisikan di dalam file ini)
+// 4. Jalankan Laravel secara normal
 require __DIR__ . '/../public/index.php';
